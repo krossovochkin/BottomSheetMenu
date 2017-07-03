@@ -20,7 +20,7 @@ If you want to use **kotlin**-version of library: [ ![Download](https://api.bint
 implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenukt:1.1'
 ```
 
-1. Create `menu.xml` file as for any other menu, providing id, title and icon for each item
+2. Create `menu.xml` file as for any other menu, providing id, title and icon for each item
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
@@ -35,7 +35,7 @@ implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenukt:1.1'
         android:icon="@drawable/ic_delete_black_24dp"/>
 </menu>
 ```
-2. Create instance of `BottomSheetMenu` using its `Builder` and provide callback for instantiating and handling menu item selection:
+3. Create instance of `BottomSheetMenu` using its `Builder` and provide callback for instantiating and handling menu item selection:
 
 ##### Java
 ```
@@ -47,7 +47,7 @@ new BottomSheetMenu.Builder(getContext(), new BottomSheetMenuListener() {...} ).
 BottomSheetMenu.Builder(context, object: BottomSheetMenuListener {...}).show()
 ```
 
-3. In `BottomSheetMenuListener` initialize menu using previously created `menu.xml`
+4. In `BottomSheetMenuListener` initialize menu using previously created `menu.xml`
 
 ##### Java
 ```
@@ -65,7 +65,7 @@ override fun onCreateBottomSheetMenu(inflater: MenuInflater, menu: Menu) {
     // add custom logic here, see below for more info
 }
 ```
-4. In `BottomSheetMenuListener` add handling selection menu items e.g. by id:
+5. In `BottomSheetMenuListener` add handling selection menu items e.g. by id:
 
 ##### Java
 ```
