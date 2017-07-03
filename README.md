@@ -8,6 +8,18 @@ Basically this is implementation of **Modal bottom sheets** (list only) from [Ma
 
 How to use
 ----------
+1. Add to your `build.gradle`:
+
+If you want to use **java**-version of library: [ ![Download](https://api.bintray.com/packages/krossovochkin/BottomSheetMenu/com.krossovochkin.bottomsheetmenu%3Abottomsheetmenu/images/download.svg) ](https://bintray.com/krossovochkin/BottomSheetMenu/com.krossovochkin.bottomsheetmenu%3Abottomsheetmenu/_latestVersion)
+```
+implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenu:1.1'
+```
+
+If you want to use **kotlin**-version of library: [ ![Download](https://api.bintray.com/packages/krossovochkin/BottomSheetMenu/com.krossovochkin.bottomsheetmenu%3Abottomsheetmenukt/images/download.svg) ](https://bintray.com/krossovochkin/BottomSheetMenu/com.krossovochkin.bottomsheetmenu%3Abottomsheetmenukt/_latestVersion)
+```
+implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenukt:1.1'
+```
+
 1. Create `menu.xml` file as for any other menu, providing id, title and icon for each item
 ```
 <?xml version="1.0" encoding="utf-8"?>
