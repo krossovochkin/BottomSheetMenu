@@ -8,6 +8,8 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import com.krossovochkin.bottomsheetmenukt.BottomSheetMenu
+import com.krossovochkin.bottomsheetmenukt.setIconTint
+import com.krossovochkin.bottomsheetmenukt.setTextColor
 
 class MainKotlinActivity : AppCompatActivity(), BottomSheetMenu.BottomSheetMenuListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,7 @@ class MainKotlinActivity : AppCompatActivity(), BottomSheetMenu.BottomSheetMenuL
         inflater.inflate(R.menu.menu_bottom_sheet, menu)
 
         val item = menu.findItem(R.id.action_delete)
-        BottomSheetMenu.setMenuItemTextColor(item, Color.RED)
-        BottomSheetMenu.setMenuItemIconTint(item, Color.RED)
+        item.setTextColor(Color.RED)
+        item.setIconTint(Color.RED)
     }
 }

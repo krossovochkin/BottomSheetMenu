@@ -29,6 +29,18 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 
+fun MenuItem.setTextColor(@ColorInt textColor: Int) {
+    val s = SpannableString(title)
+    s.setSpan(ForegroundColorSpan(textColor), 0, s.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+    title = s
+}
+
+fun MenuItem.setIconTint(@ColorInt tintColor: Int) {
+    val drawable = icon.mutate()
+    DrawableCompat.setTint(drawable, tintColor)
+    icon = drawable
+}
+
 class BottomSheetMenu(
         context: Context,
         private val bottomSheetMenuListener: BottomSheetMenuListener,
@@ -105,19 +117,5 @@ class BottomSheetMenu(
         }
 
         return null
-    }
-
-    companion object {
-        fun setMenuItemTextColor(menuItem: MenuItem, @ColorInt textColor: Int) {
-            val s = SpannableString(menuItem.title)
-            s.setSpan(ForegroundColorSpan(textColor), 0, s.length, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
-            menuItem.title = s
-        }
-
-        fun setMenuItemIconTint(menuItem: MenuItem, @ColorInt tintColor: Int) {
-            val drawable = menuItem.icon.mutate()
-            DrawableCompat.setTint(drawable, tintColor)
-            menuItem.icon = drawable
-        }
     }
 }
