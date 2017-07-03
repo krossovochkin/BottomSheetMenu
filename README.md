@@ -1,11 +1,13 @@
-### Bottom Sheet Menu
+Bottom Sheet Menu (+ Kotlin version)
+===============
 Library to create [Bottom Sheet Menu](https://material.io/guidelines/components/bottom-sheets.html) in a familiar `<menu>` style.
 
 Basically this is implementation of **Modal bottom sheets** (list only) from [Material Design Guidelines](https://material.io/guidelines/components/bottom-sheets.html#bottom-sheets-modal-bottom-sheets)
 
 ![Image](/img/example.png)
 
-### How to use
+How to use
+----------
 1. Create `menu.xml` file as for any other menu, providing id, title and icon for each item
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -22,10 +24,20 @@ Basically this is implementation of **Modal bottom sheets** (list only) from [Ma
 </menu>
 ```
 2. Create instance of `BottomSheetMenu` using its `Builder` and provide callback for instantiating and handling menu item selection:
+
+##### Java
 ```
 new BottomSheetMenu.Builder(getContext(), new BottomSheetMenuListener() {...} ).show();
 ```
+
+##### Kotlin
+```
+BottomSheetMenu.Builder(context, object: BottomSheetMenuListener {...}).show()
+```
+
 3. In `BottomSheetMenuListener` initialize menu using previously created `menu.xml`
+
+##### Java
 ```
 @Override
 public void onCreateBottomSheetMenu(MenuInflater inflater, Menu menu) {
@@ -33,7 +45,17 @@ public void onCreateBottomSheetMenu(MenuInflater inflater, Menu menu) {
     // add custom logic here, see below for more info
 }
 ```
+
+##### Kotlin
+```
+override fun onCreateBottomSheetMenu(inflater: MenuInflater, menu: Menu) {
+    inflater.inflate(R.menu.menu_bottom_sheet, menu)
+    // add custom logic here, see below for more info
+}
+```
 4. In `BottomSheetMenuListener` add handling selection menu items e.g. by id:
+
+##### Java
 ```
 @Override
 public void onBottomSheetMenuItemSelected(MenuItem item) {
@@ -46,18 +68,33 @@ public void onBottomSheetMenuItemSelected(MenuItem item) {
 }
 ```
 
+##### Kotlin
+```
+override fun onBottomSheetMenuItemSelected(item: MenuItem) {
+    when (item.itemId) {
+        R.id.action_create -> // do something
+    }
+}
+```
+
 So, code is similar to creating menu in Toolbar (where `onCreateOptionsMenu` and `onOptionsItemSelected` methods are used).<br/>
 This library provides similar callbacks to make it more familiar to android components.
 
-### Additional
+Additional
+----------
 Additionally `BottomSheetsUtils` class is added with few customization methods.
 1. `setMenuItemTextColor` - sets `MenuItem` title to `Spannable` with `ForegroundColorSpan` with required color set.<br/>
 This allows to set custom text color on menu item.<br/>
 2. `setMenuItemIconTint` - similar to changing text color, uses `DrawableCompat#setTint` to set tint for icon.
 
-**NOTE:** Though in material design guidelines there is no single word about possible customizations (and they mostly should be avoided to not ruin UX), this still may be a good idea to highlight e.g. some dangerous items in menu.
+**NOTES:** 
+- Though in material design guidelines there is no single word about possible customizations (and they mostly should be avoided to not ruin UX), this still may be a good idea to highlight e.g. some dangerous items in menu.
+- In Kotlin version of library there is no `BottomSheetsUtils` class, these methods are added in `companion object`, so to call them, simply write `BottomSheetMenu.setMenuItemTextColor` or `BottomSheetMenu.setMenuItemIconTint`
+
 
 One can use these methods inside `onCreateBottomSheetMenu`:
+
+##### Java
 ```
 @Override
 public void onCreateBottomSheetMenu(MenuInflater inflater, Menu menu) {
@@ -69,7 +106,19 @@ public void onCreateBottomSheetMenu(MenuInflater inflater, Menu menu) {
 }
 ```
 
-### License
+##### Kotlin
+```
+override fun onCreateBottomSheetMenu(inflater: MenuInflater, menu: Menu) {
+    inflater.inflate(R.menu.menu_bottom_sheet, menu)
+
+    val item = menu.findItem(R.id.action_delete)
+    BottomSheetMenu.setMenuItemTextColor(item, Color.RED)
+    BottomSheetMenu.setMenuItemIconTint(item, Color.RED)
+}
+```
+
+License
+--------
 ```
 Copyright (C) 2017 Vasya Drobushkov
 
