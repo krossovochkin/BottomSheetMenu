@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">BottomSheetMenuSample</string>
+    <string name="activity_java">Java Sample Bottom Sheet</string>
+    <string name="activity_kotlin">Kotlin Sample Bottom Sheet</string>
     <string name="action_create">Create</string>
     <string name="action_delete">Delete</string>
 </resources>
