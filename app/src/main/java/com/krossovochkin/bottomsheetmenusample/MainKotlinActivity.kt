@@ -18,6 +18,7 @@ class MainKotlinActivity : AppCompatActivity(), BottomSheetMenu.BottomSheetMenuL
 
         findViewById(R.id.btn_open_bottom_sheet).setOnClickListener {
             BottomSheetMenu.Builder(context = this@MainKotlinActivity, bottomSheetMenuListener = this@MainKotlinActivity)
+                    .setTitle("Title")
                     .show()
         }
     }

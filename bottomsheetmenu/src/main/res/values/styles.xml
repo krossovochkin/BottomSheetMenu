@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2017 Vasya Drobushkov
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2017 Vasya Drobushkov
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -13,8 +12,18 @@
 <resources>
 
     <style name="BottomSheetMenu">
-        <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="BottomSheetHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#8A000000</item>
     </style>
 
     <style name="BottomSheetItem">
@@ -27,5 +36,6 @@
         <item name="android:textSize">16sp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">#DE000000</item>
     </style>
 </resources>

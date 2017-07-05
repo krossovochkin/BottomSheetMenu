@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetMenu.B
             @Override
             public void onClick(View view) {
                 new BottomSheetMenu.Builder(MainActivity.this, MainActivity.this)
+                        .setTitle("Title")
                         .show();
             }
         });

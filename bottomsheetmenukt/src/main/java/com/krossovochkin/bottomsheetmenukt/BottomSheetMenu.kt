@@ -18,16 +18,19 @@ package com.krossovochkin.bottomsheetmenukt
 import android.annotation.SuppressLint
 import android.content.Context
 import android.support.annotation.ColorInt
+import android.support.annotation.StringRes
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import kotlin.properties.Delegates
 
 fun MenuItem.setTextColor(@ColorInt textColor: Int) {
     val s = SpannableString(title)
@@ -43,11 +46,15 @@ fun MenuItem.setIconTint(@ColorInt tintColor: Int) {
 
 class BottomSheetMenu(
         context: Context,
-        private val bottomSheetMenuListener: BottomSheetMenuListener,
-        private val iconSize: Int = context.resources.getDimensionPixelSize(R.dimen.bottom_sheet_menu_item_icon_size))
+        private val bottomSheetMenuListener: BottomSheetMenuListener)
     : BottomSheetDialog(context) {
 
+    private var iconSize : Int by Delegates.notNull()
+    private var title : CharSequence? = null
+
     init {
+        iconSize = context.resources.getDimensionPixelSize(R.dimen.bottom_sheet_menu_item_icon_size)
+
         setOnShowListener({ dialog ->
             val d = dialog as BottomSheetDialog
             val bottomSheet = d.findViewById(android.support.design.R.id.design_bottom_sheet) as FrameLayout
@@ -57,8 +64,21 @@ class BottomSheetMenu(
 
     class Builder(private val context: Context, private val bottomSheetMenuListener: BottomSheetMenuListener) {
 
+        private var title : CharSequence? = null
+
+        fun setTitle(@StringRes titleId : Int) : Builder {
+            title = context.getString(titleId)
+            return this
+        }
+
+        fun setTitle(title : CharSequence?) : Builder {
+            this.title = title
+            return this
+        }
+
         private fun create(): BottomSheetMenu {
             val menu = BottomSheetMenu(context, bottomSheetMenuListener)
+            menu.setTitle(title)
             menu.build()
             return menu
         }
@@ -70,6 +90,11 @@ class BottomSheetMenu(
         }
     }
 
+    override fun setTitle(title: CharSequence?) {
+        // no need to call super.setTitle, as title is blocked in BottomSheetDialog
+        this.title = title
+    }
+
     private fun build() {
         val layoutInflater = LayoutInflater.from(context)
         val menu = newMenuInstance(context) ?: return
@@ -78,9 +103,20 @@ class BottomSheetMenu(
         bottomSheetMenuListener.onCreateBottomSheetMenu(menuInflater, menu)
 
         val rootView = View.inflate(context, R.layout.view_bottom_sheet_menu, null) as LinearLayout
-        setContentView(rootView)
+        rootView.addView(createHeaderView(layoutInflater, rootView, title))
         for (i in 0 until menu.size()) {
             rootView.addView(createMenuItemView(layoutInflater, rootView, menu.getItem(i)))
+        }
+        setContentView(rootView)
+    }
+
+    private fun createHeaderView(inflater: LayoutInflater, rootView: ViewGroup, title: CharSequence?): View {
+        if (TextUtils.isEmpty(title)) {
+            return inflater.inflate(R.layout.view_bottom_sheet_header_placeholder, rootView, false)
+        } else {
+            val titleView = inflater.inflate(R.layout.view_bottom_sheet_header, rootView, false) as TextView
+            titleView.text = title
+            return titleView
         }
     }
 
