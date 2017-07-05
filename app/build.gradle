@@ -29,7 +29,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenu:1.1'
-    implementation project(':bottomsheetmenukt')
+    implementation 'com.krossovochkin.bottomsheetmenu:bottomsheetmenukt:1.1'
 }
 repositories {
     mavenCentral()
