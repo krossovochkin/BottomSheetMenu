@@ -20,8 +20,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,19 +41,33 @@ public class BottomSheetMenu extends BottomSheetDialog {
 
     private final BottomSheetMenuListener mBottomSheetMenuListener;
     private final int mIconSize;
+    @Nullable
+    private CharSequence mTitle;
 
     public static class Builder {
 
         private final Context mContext;
         private final BottomSheetMenuListener mBottomSheetMenuListener;
+        private CharSequence mTitle;
 
         public Builder(@NonNull Context context, BottomSheetMenuListener listener) {
             mContext = context;
             mBottomSheetMenuListener = listener;
         }
 
+        public BottomSheetMenu.Builder setTitle(@StringRes int titleId) {
+            mTitle = mContext.getString(titleId);
+            return this;
+        }
+
+        public BottomSheetMenu.Builder setTitle(CharSequence title) {
+            mTitle = title;
+            return this;
+        }
+
         private BottomSheetMenu create() {
             final BottomSheetMenu menu = new BottomSheetMenu(mContext, mBottomSheetMenuListener);
+            menu.setTitle(mTitle);
             menu.build();
             return menu;
         }
@@ -82,6 +99,12 @@ public class BottomSheetMenu extends BottomSheetDialog {
         });
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        // no need to call super.setTitle, as title is blocked in BottomSheetDialog
+        mTitle = title;
+    }
+
     private void build() {
         final LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         final Menu menu = newMenuInstance(getContext());
@@ -94,9 +117,20 @@ public class BottomSheetMenu extends BottomSheetDialog {
         mBottomSheetMenuListener.onCreateBottomSheetMenu(menuInflater, menu);
 
         final LinearLayout rootView = (LinearLayout) View.inflate(getContext(), R.layout.view_bottom_sheet_menu, null);
-        setContentView(rootView);
+        rootView.addView(createHeaderView(layoutInflater, rootView, mTitle));
         for (int i = 0; i < menu.size(); i++) {
             rootView.addView(createMenuItemView(layoutInflater, rootView, menu.getItem(i)));
+        }
+        setContentView(rootView);
+    }
+
+    private View createHeaderView(final LayoutInflater inflater, ViewGroup rootView, @Nullable CharSequence title) {
+        if (TextUtils.isEmpty(title)) {
+            return inflater.inflate(R.layout.view_bottom_sheet_header_placeholder, rootView, false);
+        } else {
+            final TextView titleView = (TextView) inflater.inflate(R.layout.view_bottom_sheet_header, rootView, false);
+            titleView.setText(mTitle);
+            return titleView;
         }
     }
 
